@@ -1,0 +1,26 @@
+version: "3.6"
+services:
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend/src:/usr/src/app
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=development
+    ports:
+      - "5000:5000"
+    command: flask run --host=0.0.0.0
+
+  db:
+    image: postgres:12
+    restart: always
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+volumes:
+  app-db-data:
