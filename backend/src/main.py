@@ -40,6 +40,11 @@ class Page(db.Model):
     image_path = db.Column(db.String)
 
 
+@app.route("/", methods=["GET"])
+def render_home_page():
+    return render_template("home.html")
+
+
 @app.route("/books", methods=["GET"])
 def create_book():
     return render_template("books.html")
