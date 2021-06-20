@@ -42,7 +42,12 @@ class Page(db.Model):
 
 @app.route("/books", methods=["GET"])
 def create_book():
-    return render_template("home.html")
+    return render_template("books.html")
+
+
+@app.route("/books/new", methods=["GET"])
+def render_new_book_form():
+    return render_template("new_book_form.html")
 
 
 if __name__ == "__main__":
