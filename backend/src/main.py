@@ -2,6 +2,10 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
+from sqlalchemy.orm import relationship
+from sqlalchemy import ForeignKey
+from werkzeug.utils import secure_filename
+import uuid
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -29,6 +33,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String)
     title = db.Column(db.String)
+    pages = relationship("Page")
 
 
 class Page(db.Model):
@@ -37,6 +42,7 @@ class Page(db.Model):
     index = db.Column(db.Integer)
     content = db.Column(db.String)
     image_path = db.Column(db.String)
+    book_id = db.Column(db.Integer, ForeignKey("books.id"))
 
 
 @app.route("/", methods=["GET"])
@@ -83,6 +89,21 @@ def get_book_by_id(book_id):
     if book is None:
         return {"status": "failed"}, 404
 
+    return render_template("book.html", book=book)
+
+
+@app.route("/books/<int:book_id>/pages/upload", methods=["POST"])
+def upload_page(book_id):
+    book = db.session.query(Book).get(book_id)
+    if book is None:
+        return {"status": "failed"}, 404
+    f = request.files["file"]
+    random_string = uuid.uuid4().hex[:6].upper()
+    file_path = f"static/images/{secure_filename(random_string +f.filename)}"
+    f.save(file_path)
+    page = Page(book_id=book_id, image_path=file_path)
+    db.session.add(page)
+    db.session.commit()
     return render_template("book.html", book=book)
 
 

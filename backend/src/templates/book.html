@@ -4,4 +4,23 @@
 {%endblock%}
 {%block content%}
 <h3>Book {{book.id}}</h3>
+
+<div class="col">
+    <div class="row">
+        <div class="col-md-11">
+        </div>
+        <div class="col">
+            <form enctype="multipart/form-data" action="/books/{{book.id}}/pages/upload" method="POST">
+                <label class="btn btn-primary">
+                    Upload <input type="file" onchange="this.form.submit()" name="file" hidden>
+                </label>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{%for page in book.pages%}
+<img id="img-{{page.id}}" src="/{{page.image_path}}">
+{%endfor%}
 {%endblock%}
