@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{%block style%}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{%endblock%}
 {%block content%}
 <div class="container">
     <div class="row justify-content-start">
@@ -19,29 +22,22 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for book in books %}
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row">{{book.id}}</th>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>
+                            <button onclick="handleBookDelete({{book.id}})" class="btn btn-danger btn-lg"
+                                role="button"><i class="fas fa-trash-alt"></i></button>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             <!--end of Books table -->
@@ -52,5 +48,6 @@
 
 </div>
 </div>
-
+<script type=text/javascript src="{{
+    url_for('static', filename='js/book.js') }}"></script>
 {%endblock%}

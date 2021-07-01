@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -27,7 +27,6 @@ migrate = Migrate(app, db)
 class Book(db.Model):
     __tablename__ = "books"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
     author = db.Column(db.String)
     title = db.Column(db.String)
 
@@ -46,13 +45,36 @@ def render_home_page():
 
 
 @app.route("/books", methods=["GET"])
-def create_book():
-    return render_template("books.html")
+def render_book_page():
+    books = Book.query.all()
+    print(books)
+    return render_template("books.html", books=books)
+
+
+@app.route("/books", methods=["POST"])
+def create_new_book():
+    book_tile = request.form["bookTile"]
+    book_author = request.form["bookAuthor"]
+    book = Book(title=book_tile, author=book_author)
+    db.session.add(book)
+    db.session.commit()
+    return redirect("/books")
 
 
 @app.route("/books/new", methods=["GET"])
 def render_new_book_form():
     return render_template("new_book_form.html")
+
+
+@app.route("/books/<int:book_id>", methods=["DELETE"])
+def delete_book_by_id(book_id):
+    book = db.session.query(Book).get(book_id)
+    if book is None:
+        return {"status": "failed"}, 404
+
+    db.session.delete(book)
+    db.session.commit()
+    return {"status": "ok", "id": book.id}
 
 
 if __name__ == "__main__":

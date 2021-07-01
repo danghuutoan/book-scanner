@@ -2,20 +2,16 @@
 {% block title %} Home Page {%endblock%}
 {% block content %}
 <div class="container">
-    <form>
+    <form action='/books' method="post" role="form">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="bookTitle" class="form-label">Title</label>
+            <input type="text" class="form-control" id="bookTile" name="bookTile">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Author</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="bookAuthor" class="form-label">Author</label>
+            <input type="text" class="form-control" id="bookAuthor" name="bookAuthor">
         </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Description</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
     </form>
 </div>
 
