@@ -77,5 +77,14 @@ def delete_book_by_id(book_id):
     return {"status": "ok", "id": book.id}
 
 
+@app.route("/books/<int:book_id>", methods=["GET"])
+def get_book_by_id(book_id):
+    book = db.session.query(Book).get(book_id)
+    if book is None:
+        return {"status": "failed"}, 404
+
+    return render_template("book.html", book=book)
+
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
