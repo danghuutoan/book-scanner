@@ -1,0 +1,31 @@
+.grid-container {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(9, 20%);
+}
+.grid-container > div {
+    display: inline-block;
+    border: black 3px solid;
+    margin: 16px;
+}
+
+.item-img-container {
+    background: rgba(255, 154, 72, 0.5);
+    display: inline-block;
+    
+    vertical-align: middle;
+    height: 90%;
+    width: 100%;
+}
+
+.item-img-container img {
+    max-height: 80%;
+    max-width: 90%;
+    display: inline-block;
+}
+
+.item-info {
+    display: block;
+    height: 10%;
+}

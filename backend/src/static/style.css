@@ -1,9 +1,0 @@
-[hidden] {
-    display: none !important;
-  }
-
-img {
-	object-fit: contain;
-	max-width: 30%;
-	max-height: 30%;
-}

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {%block style%}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
 {%endblock%}
 {%block content%}
 <h3>Book {{book.id}}</h3>
@@ -19,8 +20,19 @@
 
     </div>
 </div>
+<div class="grid-container">
+    {%for page in book.pages%}
 
-{%for page in book.pages%}
-<img id="img-{{page.id}}" src="/{{page.image_path}}">
-{%endfor%}
+    <div class="grid-item">
+        <div class="item-img-container">
+            <img id="img-{{page.id}}" src="/{{page.image_path}}">
+        </div>
+        <div class="item-info">
+            <p>{{page.id}}</p>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+
+
 {%endblock%}
