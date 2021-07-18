@@ -22,7 +22,8 @@
 .item-img-container img {
     max-height: 80%;
     max-width: 90%;
-    display: inline-block;
+    display: block;
+    margin:auto;
 }
 
 .item-info {
